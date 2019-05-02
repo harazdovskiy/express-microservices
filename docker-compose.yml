@@ -1,0 +1,29 @@
+version: "3.6"
+
+services:
+  api-gateway:
+    build: ./services/api-gateway
+    env_file: .env
+    ports:
+      - 3000:3000
+    depends_on:
+      - books
+
+  books:
+    env_file: .env
+    build: ./services/books
+    ports:
+      - 3031:3031
+    links:
+      - books-db
+    depends_on:
+      - books-db
+    environment:
+      WAIT_HOSTS: books-db:27017
+
+  books-db:
+    image: mongo:latest
+    volumes:
+      - ./services/books/data:/data/db
+    ports:
+      - "27017:27017"

@@ -1,0 +1,12 @@
+{
+  "name": "microservices-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "docker-compose up"
+  },
+  "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
+  "license": "ISC"
+}
