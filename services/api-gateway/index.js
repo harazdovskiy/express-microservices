@@ -1,19 +1,12 @@
 require("dotenv").config();
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
-const proxy = require("http-proxy-middleware");
+const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(
-  "/books",
-  proxy({
-    target: `http://books:${process.env.BOOKS_PORT}`,
-    changeOrigin: true
-  })
-);
+app.use("/books", require("./handlers/books"));
 
 app.get("/*", async (req, res) => {
   try {

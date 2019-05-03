@@ -3,6 +3,7 @@ version: "3.6"
 services:
   api-gateway:
     build: ./services/api-gateway
+    restart: always
     env_file: .env
     ports:
       - 3000:3000
@@ -11,6 +12,7 @@ services:
 
   books:
     env_file: .env
+    restart: always
     build: ./services/books
     ports:
       - 3031:3031

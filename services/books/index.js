@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(morgan("tiny"));
@@ -14,7 +14,7 @@ app.use(morgan("tiny"));
 // const { Book } = require("./db/book");
 // const { ObjectId } = require("mongoose").Types;
 
-app.get("/books/:id", async (req, res) => {
+app.get("/:id", async (req, res) => {
   try {
     return res.send({
       id: req.params.id
@@ -24,8 +24,9 @@ app.get("/books/:id", async (req, res) => {
   }
 });
 
-app.post("/books", async (req, res) => {
+app.post("/", async (req, res) => {
   try {
+    console.log("loooooog");
     return res.send({ message: req.body });
   } catch (error) {
     res.status(500).json({ registerSuccess: false, error: error.message });
