@@ -3,49 +3,60 @@ const express = require("express");
 const morgan = require("morgan");
 
 const bodyParser = require("body-parser");
+const Book = require("./db/book");
+const { ObjectId } = require("mongoose").Types;
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 app.use(morgan("tiny"));
-
-// const { Book } = require("./db/book");
-// const { ObjectId } = require("mongoose").Types;
 
 app.get("/:id", async (req, res) => {
   try {
     return res.send({
-      id: req.params.id
+      err: false,
+      data: await Book.findById(req.params.id)
     });
   } catch (error) {
-    res.status(500).json({ registerSuccess: false, error: error.message });
+    res.status(500).json({ error: false, error: error.message });
   }
 });
 
 app.post("/", async (req, res) => {
   try {
-    console.log("loooooog");
-    return res.send({ message: req.body });
+    const book = await Book.create(req.body);
+    return res.json({
+      err: false,
+      data: book
+    });
   } catch (error) {
-    res.status(500).json({ registerSuccess: false, error: error.message });
+    res.status(500).json({ error: true, error: error.message });
   }
 });
 
-app.put("/books", async (req, res) => {
+app.put("/", async (req, res) => {
   try {
-    return res.send({ params: req.body });
+    const { _id, ...valuesToUpdate } = req.body;
+    const updatedBook = await Book.findByIdAndUpdate(
+      ObjectId(req.body._id),
+      {
+        $set: valuesToUpdate
+      },
+      { new: true }
+    );
+    return res.send({ err: false, book: updatedBook });
   } catch (error) {
-    res.status(500).json({ registerSuccess: false, error: error.message });
+    res.status(500).json({ error: true, error: error.message });
   }
 });
 
-app.delete("/books/:id", async (req, res) => {
+app.delete("/:id", async (req, res) => {
   try {
-    return res.send({ params: req.params.id });
+    await Book.findByIdAndDelete(ObjectId(req.params.id));
+    return res.send({ err: false, removed: true });
   } catch (error) {
-    res.status(500).json({ registerSuccess: false, error: error.message });
+    res.status(500).json({ error: true, error: error.message });
   }
 });
 
