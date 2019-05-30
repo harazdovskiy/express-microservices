@@ -1,35 +1,35 @@
 const requestPromise = require("request-promise");
 
-class Book {
+class User {
   constructor(opts) {
     this.baseUrl = opts.baseUrl;
   }
 
-  getBookById(id) {
+  getUserById(id) {
     return requestPromise(`${this.baseUrl}/${id}`, { json: true });
   }
 
-  createdBook(book) {
+  createdUser(book) {
     return requestPromise(`${this.baseUrl}`, {
       json: true,
       method: "POST",
       body: book
     });
   }
-  updateBook(book) {
+  updateUser(book) {
     return requestPromise(`${this.baseUrl}`, {
       json: true,
       method: "PUT",
       body: book
     });
   }
-  deleteBook(id) {
+  deleteUser(id) {
     return requestPromise(`${this.baseUrl}/${id}`, {
       method: "DELETE"
     });
   }
 }
 
-module.exports = new Book({
-  baseUrl: `${process.env.BOOKS_URL}:${process.env.BOOKS_PORT}`
+module.exports = new User({
+  baseUrl: `${process.env.USERS_URL}:${process.env.USERS_PORT}`
 });

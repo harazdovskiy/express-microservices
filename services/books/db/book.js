@@ -2,9 +2,15 @@ const { Schema } = require("mongoose");
 
 const bookSchema = new Schema(
   {
-    title: String,
+    title: {
+      type: String,
+      unique: true
+    },
     summary: String,
-    isbn: String,
+    isbn: {
+      type: String,
+      unique: true
+    },
     author: String,
     ratings: Number
   },

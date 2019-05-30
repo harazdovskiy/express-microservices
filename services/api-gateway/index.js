@@ -7,6 +7,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/books", require("./handlers/books"));
+app.use("/users", require("./handlers/users"));
 
 app.get("/*", async (req, res) => {
   try {

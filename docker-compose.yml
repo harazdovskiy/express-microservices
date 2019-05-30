@@ -9,6 +9,7 @@ services:
       - 3000:3000
     depends_on:
       - books
+      - users
 
   books:
     env_file: .env
@@ -16,8 +17,6 @@ services:
     build: ./services/books
     ports:
       - 3031:3031
-    links:
-      - books-db
     depends_on:
       - books-db
     environment:
@@ -29,3 +28,22 @@ services:
       - ./services/books/data:/data/db
     ports:
       - "27017:27017"
+
+  users:
+    env_file: .env
+    restart: always
+    build: ./services/users
+    ports:
+      - 3032:3032
+    depends_on:
+      - users-db
+    environment:
+      WAIT_HOSTS: users-db:27018
+
+  users-db:
+    image: mongo:latest
+    command: mongod --port 27018
+    volumes:
+      - ./services/users/data:/data/db
+    ports:
+      - "27018:27018"
