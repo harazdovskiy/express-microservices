@@ -1,2 +1,4 @@
 node_modules
 services/**/data
+services/books-db/db
+services/users-db/db

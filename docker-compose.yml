@@ -23,9 +23,12 @@ services:
       WAIT_HOSTS: books-db:${BOOKS_MONGODB_PORT}
 
   books-db:
+    env_file: .env
     image: mongo:latest
+    command: mongod -f /config.cfg --port ${BOOKS_MONGODB_PORT}
     volumes:
-      - ./services/books/data:/data/db
+      - ./services/books-db/db:/data/db
+      - ./services/books-db/config.cfg:/config.cfg
     ports:
       - "${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}"
 
@@ -42,8 +45,9 @@ services:
 
   users-db:
     image: mongo:latest
-    command: mongod --port ${USERS_MONGODB_PORT}
+    command: mongod -f ./config.cfg --port ${USERS_MONGODB_PORT}
     volumes:
-      - ./services/users/data:/data/db
+      - ./services/users-db/db:/data/db
+      - ./services/users-db/config.cfg:/config.cfg
     ports:
       - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"
