@@ -6,7 +6,7 @@ services:
     restart: always
     env_file: .env
     ports:
-      - 3000:3000
+      - ${API_PORT}:${API_PORT}
     depends_on:
       - books
       - users
@@ -16,34 +16,34 @@ services:
     restart: always
     build: ./services/books
     ports:
-      - 3031:3031
+      - ${BOOKS_PORT}:${BOOKS_PORT}
     depends_on:
       - books-db
     environment:
-      WAIT_HOSTS: books-db:27017
+      WAIT_HOSTS: books-db:${BOOKS_MONGODB_PORT}
 
   books-db:
     image: mongo:latest
     volumes:
       - ./services/books/data:/data/db
     ports:
-      - "27017:27017"
+      - "${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}"
 
   users:
     env_file: .env
     restart: always
     build: ./services/users
     ports:
-      - 3032:3032
+      - ${USERS_PORT}:${USERS_PORT}
     depends_on:
       - users-db
     environment:
-      WAIT_HOSTS: users-db:27018
+      WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}
 
   users-db:
     image: mongo:latest
-    command: mongod --port 27018
+    command: mongod --port ${USERS_MONGODB_PORT}
     volumes:
       - ./services/users/data:/data/db
     ports:
-      - "27018:27018"
+      - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"
