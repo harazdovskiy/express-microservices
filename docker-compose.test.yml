@@ -1,0 +1,28 @@
+version: "3.6"
+
+services:
+  api-gateway:
+    build: ./services/api-gateway/
+    restart: always
+    env_file: .env
+    command: npm test
+    ports:
+      - ${API_PORT}:${API_PORT}
+
+  books:
+    env_file: .env
+    restart: always
+    build: ./services/books
+    ports:
+      - ${BOOKS_PORT}:${BOOKS_PORT}
+    environment:
+      WAIT_HOSTS: books-db:${BOOKS_MONGODB_PORT}
+
+  users:
+    env_file: .env
+    restart: always
+    build: ./services/users
+    ports:
+      - ${USERS_PORT}:${USERS_PORT}
+    environment:
+      WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}

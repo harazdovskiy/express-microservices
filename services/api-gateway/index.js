@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use("/books", require("./handlers/books"));
 app.use("/users", require("./handlers/users"));
 
-app.get("/*", async (req, res) => {
+app.get("/healthcheck", async (req, res) => {
   try {
     res.send({ message: "api allive!" });
   } catch (error) {
@@ -18,6 +18,10 @@ app.get("/*", async (req, res) => {
       error
     });
   }
+});
+
+app.get("/*", async (req, res) => {
+  return res.status(404).send();
 });
 
 const port = process.env.API_PORT;

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/jest ./tests/integrational/index.test.js ",
     "start": "node index.js"
   },
   "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
@@ -14,5 +14,9 @@
     "express": "^4.16.4",
     "request-promise": "^4.2.4",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "jest": "24.8.0",
+    "supertest": "4.0.2"
   }
 }
