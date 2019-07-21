@@ -33,22 +33,22 @@ services:
     ports:
       - "${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}"
 
-  users:
-    env_file: .env
-    restart: always
-    build: ./services/users
-    ports:
-      - ${USERS_PORT}:${USERS_PORT}
-    depends_on:
-      - users-db
-    environment:
-      WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}
+  # users:
+  #   env_file: .env
+  #   restart: always
+  #   build: ./services/users
+  #   ports:
+  #     - ${USERS_PORT}:${USERS_PORT}
+  #   depends_on:
+  #     - users-db
+  #   environment:
+  #     WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}
 
-  users-db:
-    image: mongo:latest
-    command: mongod -f ./config.cfg --port ${USERS_MONGODB_PORT}
-    volumes:
-      - ./services/users-db/db:/data/db
-      - ./services/users-db/config.cfg:/config.cfg
-    ports:
-      - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"
+  # users-db:
+  #   image: mongo:latest
+  #   command: mongod -f ./config.cfg --port ${USERS_MONGODB_PORT}
+  #   volumes:
+  #     - ./services/users-db/db:/data/db
+  #     - ./services/users-db/config.cfg:/config.cfg
+  #   ports:
+  #     - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"

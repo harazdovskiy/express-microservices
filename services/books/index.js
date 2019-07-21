@@ -47,7 +47,7 @@ app.put("/", async (req, res) => {
       },
       { new: true }
     );
-    return res.send({ err: false, book: updatedBook });
+    return res.send({ err: false, data: updatedBook });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: true, error: error.message });
@@ -69,8 +69,8 @@ app.all("*", async (req, res) => {
 });
 
 const port = process.env.BOOKS_PORT;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log("BOOKS running", port);
 });
 
-module.exports = app;
+module.exports = server;
