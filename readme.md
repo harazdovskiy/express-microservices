@@ -18,6 +18,11 @@ Microservices
 docker-compose up --build
 ```
 
+**Test** run test for specific container
+```console
+docker-compose -f docker-compose.test.yml up --build books
+```
+
 **Stop** and **remove** all microservices
 
 ```console
