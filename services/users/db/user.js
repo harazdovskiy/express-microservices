@@ -1,4 +1,5 @@
 const { Schema } = require("mongoose");
+const {dbConnection} = require("./connections");
 
 const userSchema = new Schema({
   firstName: {
@@ -21,4 +22,4 @@ const userSchema = new Schema({
   state_province: String
 });
 
-module.exports = require("./index.js").model("User", userSchema);
+module.exports = dbConnection.model("User", userSchema);

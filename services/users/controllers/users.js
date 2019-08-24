@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
   try {
     return res.json({
       err: false,
-      data: UsersService.createUser(req.body)
+      data: await UsersService.createUser(req.body)
     });
   } catch (error) {
     console.error(error);
@@ -30,7 +30,7 @@ router.put("/", async (req, res) => {
   try {
     return res.send({
       err: false,
-      user: await UsersService.updateUser(req.body)
+      data: await UsersService.updateUser(req.body)
     });
   } catch (error) {
     console.error(error);

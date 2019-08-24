@@ -1,0 +1,6 @@
+./tests/integrational/before.spec.js
+./tests/integrational/index.spec.js
+./tests/integrational/after.spec.js
+
+--timeout 60000
+

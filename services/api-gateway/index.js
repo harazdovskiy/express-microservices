@@ -30,9 +30,3 @@ app.listen(port, () => {
 });
 
 module.exports = app;
-
-// TODO:
-// nginx
-// express http proxt
-// auth
-
