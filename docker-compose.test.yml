@@ -16,13 +16,11 @@ services:
 
     ports:
       - ${BOOKS_PORT}:${BOOKS_PORT}
-    environment:
-      WAIT_HOSTS: books-db:${BOOKS_MONGODB_PORT}
 
   users:
     env_file: .env
-    build: ./services/users
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile.test
     ports:
       - ${USERS_PORT}:${USERS_PORT}
-    environment:
-      WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}

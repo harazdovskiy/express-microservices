@@ -20,7 +20,8 @@ const connections = {
 };
 
 let dbURI;
-if (process.env.USERS_MONGODB_URI) {
+
+if (process.env.ENV !== "test" && process.env.USERS_MONGODB_URI) {
   dbURI = process.env.USERS_MONGODB_URI.trim();
   connections.dbConnection.openUri(dbURI, dbOptions);
 } else {

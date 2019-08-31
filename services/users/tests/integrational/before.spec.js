@@ -4,7 +4,7 @@ const { expect } = require("chai");
 
 async function openMongoTestConnection() {
   const mongoserver = new MongoMemoryServer();
-  const mongoURI = await mongoserver.getConnectionString("");
+  const mongoURI = await mongoserver.getConnectionString();
   dbConnection.openUri(mongoURI, dbOptions);
   await new Promise((resolve, reject) => {
     dbConnection.once("open", resolve);

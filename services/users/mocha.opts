@@ -2,5 +2,7 @@
 ./tests/integrational/index.spec.js
 ./tests/integrational/after.spec.js
 
---timeout 60000
-
+--timeout 15000
+--colors
+--bail
+--exit 

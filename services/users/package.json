@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --opts mocha.opts",
+    "test": "ENV=test ./node_modules/.bin/mocha --opts mocha.opts",
     "start": "node index.js"
   },
   "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
