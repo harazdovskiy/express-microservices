@@ -26,5 +26,3 @@ class UserService {
 }
 
 module.exports = new UserService();
-
-// TODO: use sql
