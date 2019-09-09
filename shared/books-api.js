@@ -30,6 +30,4 @@ class Book {
   }
 }
 
-module.exports = new Book({
-  baseUrl: `${process.env.BOOKS_URL}:${process.env.BOOKS_PORT}`
-});
+module.exports = Book;

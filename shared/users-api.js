@@ -30,6 +30,4 @@ class User {
   }
 }
 
-module.exports = new User({
-  baseUrl: `${process.env.USERS_URL}:${process.env.USERS_PORT}`
-});
+module.exports = User

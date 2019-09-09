@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const BookApi = require("./books-api");
+const BookApi = require("../../../shared/books-api");
 
 router.get("/:id", async (req, res) => {
   try {

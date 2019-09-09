@@ -7,3 +7,5 @@ COPY ./ /app
 RUN npm install
 
 EXPOSE ${API_PORT}
+
+CMD npm start

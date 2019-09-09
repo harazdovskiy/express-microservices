@@ -1,0 +1,16 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "books-api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
+  "license": "ISC",
+  "dependencies": {
+    "request-promise": "^4.2.4",
+    "request": "^2.88.0"
+  }
+}

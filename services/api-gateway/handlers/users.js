@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const UserApi = require("./users-api");
+const UserApi = require("../../../shared/users-api");
 
 router.get("/:id", async (req, res) => {
   try {
