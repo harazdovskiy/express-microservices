@@ -9,6 +9,10 @@ class UserService {
     return User.findById(id);
   }
 
+  async getUsers() {
+    return User.find();
+  }
+
   async updateUser(user) {
     const { _id, ...valuesToUpdate } = user;
     return User.findByIdAndUpdate(

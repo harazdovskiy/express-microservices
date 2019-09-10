@@ -1,24 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const UsersService = require("../services/users");
+const Book = require("../db/book");
+const { ObjectId } = require("mongoose").Types;
 
 router.get("/:id", async (req, res) => {
   try {
     return res.send({
       err: false,
-      data: await UsersService.getUser(req.params.id)
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: false, error: error.message });
-  }
-});
-
-router.get("/", async (req, res) => {
-  try {
-    return res.send({
-      err: false,
-      data: await UsersService.getUsers()
+      data: await Book.findById(req.params.id)
     });
   } catch (error) {
     console.error(error);
@@ -28,9 +17,10 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
+    const book = await Book.create(req.body);
     return res.json({
       err: false,
-      data: await UsersService.createUser(req.body)
+      data: book
     });
   } catch (error) {
     console.error(error);
@@ -40,10 +30,15 @@ router.post("/", async (req, res) => {
 
 router.put("/", async (req, res) => {
   try {
-    return res.send({
-      err: false,
-      data: await UsersService.updateUser(req.body)
-    });
+    const { _id, ...valuesToUpdate } = req.body;
+    const updatedBook = await Book.findByIdAndUpdate(
+      ObjectId(req.body._id),
+      {
+        $set: valuesToUpdate
+      },
+      { new: true }
+    );
+    return res.send({ err: false, data: updatedBook });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: true, error: error.message });
@@ -52,7 +47,7 @@ router.put("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    await UsersService.deleteUser(req.params.id);
+    await Book.findByIdAndDelete(ObjectId(req.params.id));
     return res.send({ err: false, removed: true });
   } catch (error) {
     console.error(error);
