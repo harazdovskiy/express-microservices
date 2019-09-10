@@ -30,7 +30,7 @@ describe("user api tests", () => {
       state_province: "Best privince"
     };
 
-    const res = await app.post("/").send(user);
+    const res = await app.post("/public").send(user);
 
     expect(res.status).to.be.equal(200);
 
@@ -56,7 +56,7 @@ describe("user api tests", () => {
       state_province: "Best privince"
     }).then(data => JSON.parse(JSON.stringify(data)));
 
-    const res = await app.get(`/${user._id}`);
+    const res = await app.get(`public/${user._id}`);
 
     expect(res.status).to.be.equal(200);
 
@@ -78,7 +78,7 @@ describe("user api tests", () => {
       state_province: "Best privince"
     }).then(data => JSON.parse(JSON.stringify(data)));
 
-    const res = await app.delete(`/${user._id}`);
+    const res = await app.delete(`public/${user._id}`);
 
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.deep.equal({
@@ -111,7 +111,7 @@ describe("user api tests", () => {
       state_province: "Oklahoma"
     };
 
-    const res = await app.put("/").send(editedUser);
+    const res = await app.put("/public").send(editedUser);
 
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.deep.equal({

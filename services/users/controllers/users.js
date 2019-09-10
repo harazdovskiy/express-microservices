@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const UsersService = require("../services/users");
+const { Book } = require("express-microservices-api");
+
+const BookServiceApi = new Book({ baseUrl: "http://books/public" });
 
 router.get("/:id", async (req, res) => {
   try {

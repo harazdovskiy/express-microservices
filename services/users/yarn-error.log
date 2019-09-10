@@ -1,0 +1,61 @@
+Arguments: 
+  /Users/dmytroharazdovskiy/.nvm/versions/node/v10.16.2/bin/node /usr/local/Cellar/yarn/1.12.1/libexec/bin/yarn.js install
+
+PATH: 
+  /usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/dmytroharazdovskiy/.nvm/versions/node/v10.16.2/bin
+
+Yarn version: 
+  1.12.1
+
+Node version: 
+  10.16.2
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/express-microservices-api: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.12.1/libexec/lib/cli.js:63139:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.12.1/libexec/lib/cli.js:124547:22)
+      at Request.emit (events.js:198:13)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.12.1/libexec/lib/cli.js:125519:10)
+      at Request.emit (events.js:198:13)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.12.1/libexec/lib/cli.js:125441:12)
+      at Object.onceWrapper (events.js:286:20)
+      at IncomingMessage.emit (events.js:203:15)
+      at endReadableNT (_stream_readable.js:1145:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
+
+npm manifest: 
+  {
+    "name": "books-microservice",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+      "test": "ENV=test ./node_modules/.bin/mocha --opts mocha.opts",
+      "start": "node index.js"
+    },
+    "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
+    "license": "ISC",
+    "dependencies": {
+      "bluebird": "^3.5.5",
+      "body-parser": "^1.19.0",
+      "dotenv": "^7.0.0",
+      "express": "^4.16.4",
+      "mongoose": "^5.5.5",
+      "morgan": "^1.9.1"
+    },
+    "devDependencies": {
+      "chai": "^4.2.0",
+      "chai-http": "^4.3.0",
+      "mocha": "^6.2.0",
+      "mongodb-memory-server": "^5.2.0",
+      "express-microservices-api": "git@github.com/Dmytro005/express-microservices-api"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

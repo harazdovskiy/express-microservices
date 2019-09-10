@@ -1,12 +1,6 @@
 version: "3.6"
 
 services:
-  api-gateway:
-    build: ./services/api-gateway/
-    env_file: .env
-    command: npm test
-    ports:
-      - ${API_PORT}:${API_PORT}
 
   books:
     env_file: .env
@@ -14,13 +8,8 @@ services:
       context: ./services/books
       dockerfile: Dockerfile.test
 
-    ports:
-      - ${BOOKS_PORT}:${BOOKS_PORT}
-
   users:
     env_file: .env
     build:
       context: ./services/users
       dockerfile: Dockerfile.test
-    ports:
-      - ${USERS_PORT}:${USERS_PORT}

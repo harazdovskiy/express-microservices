@@ -14,7 +14,8 @@
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "mongoose": "^5.5.5",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "express-microservices-api": "github.com:Dmytro005/express-microservices-api.git#master"
   },
   "devDependencies": {
     "chai": "^4.2.0",
