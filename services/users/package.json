@@ -15,7 +15,7 @@
     "express": "^4.16.4",
     "mongoose": "^5.5.5",
     "morgan": "^1.9.1",
-    "express-microservices-api": "github.com:Dmytro005/express-microservices-api.git#master"
+    "shared-microservice-api": "1.0.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
