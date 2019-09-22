@@ -11,6 +11,7 @@
   "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hapi": "^18.3.2"
+    "@hapi/hapi": "^18.3.2",
+    "microservices-api": "Dmytro005/express-microservices"
   }
 }

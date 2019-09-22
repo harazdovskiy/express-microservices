@@ -6,18 +6,14 @@ const routes = [
     method: "POST",
     path: "/public/sign-in",
     handler: function(request, h) {
-      const payload = request.payload;
-
-      return handlers.signIn();
+      return handlers.signIn(request.payload);
     }
   },
   {
     method: "POST",
     path: "/public/sign-up",
     handler: function(request, h) {
-      const payload = request.payload;
-
-      return handlers.signUp();
+      return handlers.signUp(request.payload);
     }
   }
 ];

@@ -7,24 +7,30 @@ services:
       - ./services/public-api-gateway/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 3000:80
-    # depends_on:
-    #   - books
-    #   - users
-    #   - auth
+    depends_on:
+      #   - books
+      - users
+      - auth
 
   auth:
     env_file: .env
-    restart: always
-    build: ./services/auth
-    # ports:
-    #   - "${AUTH_PORT}:${AUTH_PORT}"
+    # restart: always
+    environment:
+      - "SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}"
+    build:
+      context: .
+      dockerfile: ./services/auth/Dockerfile
+    ports:
+      - "${AUTH_PORT}:${AUTH_PORT}"
 
   books:
     env_file: .env
     restart: always
     build: ./services/books
-    # ports:
-    #   - "${BOOKS_PORT}:${BOOKS_PORT}"
+    volumes:
+      - ~/.ssh:/root/.ssh
+    ports:
+      - "${BOOKS_PORT}:${BOOKS_PORT}"
     depends_on:
       - books-db
     environment:
@@ -57,3 +63,6 @@ services:
       - ./services/users-db/config.cfg:/config.cfg
     ports:
       - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"
+# volumes:
+#   keys:
+#     external: true

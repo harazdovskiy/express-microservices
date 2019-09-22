@@ -1,0 +1,5 @@
+Host git@github.com
+  AddKeysToAgent yes
+  HostName git@github.com
+  PreferredAuthentications publickey
+  IdentityFile /root/.ssh/github_rsa
