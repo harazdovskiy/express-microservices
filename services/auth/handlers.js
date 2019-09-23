@@ -1,5 +1,5 @@
-const { User } = require("microservices-api");
-const UsersApi = new User({ baseUrl: `${process.env.USERS_URL}${USERS_PORT}/internal` });
+const { User } = require('../common');
+const UsersApi = new User({ baseUrl: `${process.env.USERS_URL}:${process.env.USERS_PORT}/internal` });
 
 module.exports.signUp = async user => {
   const res = await UsersApi.createdUser(user);

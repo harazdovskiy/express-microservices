@@ -8,15 +8,12 @@ services:
     ports:
       - 3000:80
     depends_on:
-      #   - books
+      - books
       - users
       - auth
 
   auth:
     env_file: .env
-    # restart: always
-    environment:
-      - "SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY}"
     build:
       context: .
       dockerfile: ./services/auth/Dockerfile
@@ -26,9 +23,9 @@ services:
   books:
     env_file: .env
     restart: always
-    build: ./services/books
-    volumes:
-      - ~/.ssh:/root/.ssh
+    build:
+      context: .
+      dockerfile: ./services/books/Dockerfile
     ports:
       - "${BOOKS_PORT}:${BOOKS_PORT}"
     depends_on:
@@ -39,7 +36,9 @@ services:
   users:
     env_file: .env
     restart: always
-    build: ./services/users
+    build:
+      context: .
+      dockerfile: ./services/users/Dockerfile
     depends_on:
       - users-db
     environment:

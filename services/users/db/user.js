@@ -26,7 +26,7 @@ const userSchema = new Schema({
   state_province: String
 });
 
-schema.methods.authenticate = function authenticate(password) {
+  userSchema.methods.authenticate = function authenticate(password) {
   return bcrypt.compareSync(password, this.password);
 };
 

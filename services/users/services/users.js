@@ -33,7 +33,9 @@ class UserService {
     return User.findByIdAndDelete(ObjectId(id));
   }
 
-  static genPasswordHash = password => bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  static genPasswordHash(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  }
 }
 
 module.exports = new UserService();
