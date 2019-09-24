@@ -1,9 +1,14 @@
 const User = require("../db/user");
 const { ObjectId } = require("mongoose").Types;
+const bcrypt = require("bcrypt");
 
 class UserService {
   async createUser(user) {
-    return User.create(user);
+    const { password, ...data } = user;
+    return User.create({
+      password: UserService.genPasswordHash(password),
+      ...data
+    });
   }
   async getUser(id) {
     return User.findById(id);
@@ -26,6 +31,10 @@ class UserService {
 
   async deleteUser(id) {
     return User.findByIdAndDelete(ObjectId(id));
+  }
+
+  static genPasswordHash(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
   }
 }
 

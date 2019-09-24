@@ -1,0 +1,31 @@
+FROM node:11
+
+ARG USER
+
+ARG PASS
+
+WORKDIR /app
+
+COPY ./services/auth /app
+
+COPY ./ssh /root/.ssh
+
+RUN eval "$(ssh-agent)"
+
+RUN ssh-agent /bin/bash
+
+RUN ssh-add -K /root/.ssh/github_rsa
+
+# RUN chmod 600 /root/.ssh/github_rsa
+
+RUN git clone git@github.com:Dmytro005/lviv-lib-layout.git ./foler
+
+RUN npm install
+
+# RUN rm -rf /root/.ssh
+
+EXPOSE ${AUTH_PORT}
+
+CMD npm start
+
+
