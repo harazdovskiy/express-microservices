@@ -17,7 +17,8 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    select: false
   },
   city: String,
   address: String,
@@ -25,9 +26,5 @@ const userSchema = new Schema({
   country: String,
   state_province: String
 });
-
-  userSchema.methods.authenticate = function authenticate(password) {
-  return bcrypt.compareSync(password, this.password);
-};
 
 module.exports = dbConnection.model("User", userSchema);

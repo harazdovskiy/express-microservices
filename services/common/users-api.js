@@ -28,11 +28,12 @@ class User {
       method: "DELETE"
     });
   }
-  getUserByField(queryParams) {
-    return requestPromise(`${this.baseUrl}/?`, {
+  async authenticateUser({ email, password }) {
+    const user = await requestPromise(`${this.baseUrl}/auth`, {
       method: "GET",
-      qs: queryParams
+      qs: { email, password }
     });
+    return JSON.parse(user);
   }
 }
 

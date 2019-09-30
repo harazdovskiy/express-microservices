@@ -52,7 +52,7 @@ services:
       - ./services/books-db/db:/data/db
       - ./services/books-db/config.cfg:/config.cfg
     ports:
-      - "${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}"
+      - ${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}
 
   users-db:
     image: mongo:latest
@@ -61,7 +61,7 @@ services:
       - ./services/users-db/db:/data/db
       - ./services/users-db/config.cfg:/config.cfg
     ports:
-      - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"
+      - ${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}
 # volumes:
 #   keys:
 #     external: true

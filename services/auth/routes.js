@@ -1,12 +1,11 @@
 const handlers = require("./handlers");
-// TODO: Add loging plugin
-// TODO: Separratee public and internal routes
 const routes = [
   {
     method: "POST",
     path: "/public/sign-in",
-    handler: function(request, h) {
-      return handlers.signUp(request.payload);
+    handler: async function(request, h) {
+      const user = await handlers.signIn(request.payload);
+      return h.response({ err: false, user });
     }
   }
 ];
