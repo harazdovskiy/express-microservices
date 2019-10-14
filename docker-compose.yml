@@ -18,7 +18,9 @@ services:
       context: .
       dockerfile: ./services/auth/Dockerfile
     ports:
-      - "${AUTH_PORT}:${AUTH_PORT}"
+      - ${AUTH_PORT}:${AUTH_PORT}
+    depends_on:
+      - tokens-db
 
   books:
     env_file: .env
@@ -27,7 +29,7 @@ services:
       context: .
       dockerfile: ./services/books/Dockerfile
     ports:
-      - "${BOOKS_PORT}:${BOOKS_PORT}"
+      - ${BOOKS_PORT}:${BOOKS_PORT}
     depends_on:
       - books-db
     environment:
@@ -43,6 +45,11 @@ services:
       - users-db
     environment:
       WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}
+
+  tokens-db:
+    image: redis:latest
+    ports:
+      - 6379:6379
 
   books-db:
     env_file: .env
@@ -62,6 +69,3 @@ services:
       - ./services/users-db/config.cfg:/config.cfg
     ports:
       - ${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}
-# volumes:
-#   keys:
-#     external: true

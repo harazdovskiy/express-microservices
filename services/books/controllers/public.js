@@ -15,6 +15,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    return res.send({
+      err: false,
+      data: await Book.find({})
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: false, error: error.message });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const book = await Book.create(req.body);

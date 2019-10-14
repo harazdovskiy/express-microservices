@@ -3,6 +3,14 @@ const { ObjectId } = require("mongoose").Types;
 const bcrypt = require("bcrypt");
 
 class UserService {
+  static genPasswordHash(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+  }
+
+  static comparePasswords(password, hashedPassword) {
+    return bcrypt.compareSync(password, hashedPassword);
+  }
+
   async createUser(user) {
     const { password, ...data } = user;
     return User.create({
@@ -41,14 +49,6 @@ class UserService {
 
   async deleteUser(id) {
     return User.findByIdAndDelete(ObjectId(id));
-  }
-
-  static genPasswordHash(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-  }
-
-  static comparePasswords(password, hashedPassword) {
-    return bcrypt.compareSync(password, hashedPassword);
   }
 }
 
