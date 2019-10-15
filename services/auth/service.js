@@ -1,4 +1,5 @@
 const redis = require("redis");
+<<<<<<< HEAD
 const { TOKENS_REDIS_URI, TOKENS_REDIS_PORT, SECRET, INVITE_EXPIRES_IN } = process.env;
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
@@ -37,3 +38,22 @@ module.exports = new TokenService({
   secret: SECRET,
   expiresIn: INVITE_EXPIRES_IN
 });
+=======
+const { TOKENS_REDIS_URI } = process.env;
+
+class TokenService {
+  constructor({ port, host }) {
+    this.client = redis.createClient({
+      port,
+      host,
+      socket_keepalive: true
+    });
+  }
+
+  generateToken(userId) {
+    this.client.hg;
+  }
+}
+
+module.exports = new TokenService({ host: TOKENS_REDIS_URI, port: 6379 });
+>>>>>>> 43d02da0cf28b5d7d5746f358408c2c7b22184f5
