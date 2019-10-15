@@ -1,7 +1,10 @@
 const { User } = require("../common");
-const UsersApi = new User({ baseUrl: `${process.env.USERS_URL}:${process.env.USERS_PORT}` });
+const TokenService = require("./service");
 
-module.exports.signIn = async ({ password, email }) => {
-  const res = await UsersApi.authenticateUser({ email, password });
-  return res.data;
+module.exports.generateToken = async (userId) => {
+  return TokenService.generateToken(userId);
 };
+
+// module.exports.generateToken = async (userId) => {
+  // return TokenService.(userId);
+// };

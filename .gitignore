@@ -1,4 +1,5 @@
 node_modules
+.vscode
 services/**/data
 services/**/coverage
 services/books-db/db
