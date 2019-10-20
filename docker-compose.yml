@@ -8,7 +8,7 @@ services:
     ports:
       - 3000:80
     depends_on:
-      - books
+      # - books
       - users
       - auth
 
@@ -38,6 +38,8 @@ services:
   users:
     env_file: .env
     restart: always
+    ports:
+      - ${USERS_PORT}:${USERS_PORT}
     build:
       context: .
       dockerfile: ./services/users/Dockerfile
@@ -48,14 +50,9 @@ services:
 
   tokens-db:
     image: redis:latest
-<<<<<<< HEAD
     command: redis-server --port ${TOKENS_REDIS_PORT}
     ports:
       - ${TOKENS_REDIS_PORT}:${TOKENS_REDIS_PORT}
-=======
-    ports:
-      - 6379:6379
->>>>>>> 43d02da0cf28b5d7d5746f358408c2c7b22184f5
 
   books-db:
     env_file: .env
