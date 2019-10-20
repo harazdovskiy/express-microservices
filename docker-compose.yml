@@ -7,24 +7,29 @@ services:
       - ./services/public-api-gateway/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - 3000:80
-    # depends_on:
-    #   - books
-    #   - users
-    #   - auth
+    depends_on:
+      # - books
+      - users
+      - auth
 
   auth:
     env_file: .env
-    restart: always
-    build: ./services/auth
-    # ports:
-    #   - "${AUTH_PORT}:${AUTH_PORT}"
+    build:
+      context: .
+      dockerfile: ./services/auth/Dockerfile
+    ports:
+      - ${AUTH_PORT}:${AUTH_PORT}
+    depends_on:
+      - tokens-db
 
   books:
     env_file: .env
     restart: always
-    build: ./services/books
-    # ports:
-    #   - "${BOOKS_PORT}:${BOOKS_PORT}"
+    build:
+      context: .
+      dockerfile: ./services/books/Dockerfile
+    ports:
+      - ${BOOKS_PORT}:${BOOKS_PORT}
     depends_on:
       - books-db
     environment:
@@ -33,11 +38,21 @@ services:
   users:
     env_file: .env
     restart: always
-    build: ./services/users
+    ports:
+      - ${USERS_PORT}:${USERS_PORT}
+    build:
+      context: .
+      dockerfile: ./services/users/Dockerfile
     depends_on:
       - users-db
     environment:
       WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}
+
+  tokens-db:
+    image: redis:latest
+    command: redis-server --port ${TOKENS_REDIS_PORT}
+    ports:
+      - ${TOKENS_REDIS_PORT}:${TOKENS_REDIS_PORT}
 
   books-db:
     env_file: .env
@@ -47,7 +62,7 @@ services:
       - ./services/books-db/db:/data/db
       - ./services/books-db/config.cfg:/config.cfg
     ports:
-      - "${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}"
+      - ${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}
 
   users-db:
     image: mongo:latest
@@ -56,4 +71,4 @@ services:
       - ./services/users-db/db:/data/db
       - ./services/users-db/config.cfg:/config.cfg
     ports:
-      - "${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}"
+      - ${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}

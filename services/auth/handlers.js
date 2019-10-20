@@ -1,7 +1,10 @@
-module.exports.signIn = async (email, password) => {
-    
+const { User } = require("../common");
+const TokenService = require("./service");
+
+module.exports.generateToken = async (userId) => {
+  return TokenService.generateToken(userId);
 };
 
-module.exports.signUp = async (email, password) => {
-
-};
+// module.exports.generateToken = async (userId) => {
+  // return TokenService.(userId);
+// };
