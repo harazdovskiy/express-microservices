@@ -25,7 +25,9 @@ class Auth {
   async isAuthorized(req, res, next) {
     try {
       const { authorization } = req.headers;
-      if (!authorization) next("Provide authorization token");
+      if (!authorization) {
+        return res.status(401).json({ err: true, message: "Provide authorization token" });
+      }
       const token = authorization.split(" ")[1];
       const res = await this.validateToken(token);
       const { data } = res;

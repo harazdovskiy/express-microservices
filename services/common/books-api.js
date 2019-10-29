@@ -9,6 +9,10 @@ class Book {
     return requestPromise(`${this.baseUrl}/${id}`, { json: true });
   }
 
+  getBooks() {
+    return requestPromise(`${this.baseUrl}/`, { json: true });
+  }
+
   createdBook(book) {
     return requestPromise(`${this.baseUrl}`, {
       json: true,

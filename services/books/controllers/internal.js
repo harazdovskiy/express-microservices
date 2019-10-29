@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Book = require("../db/book");
 const { ObjectId } = require("mongoose").Types;
-const { Auth } = require("../../common");
-
-const { AUTH_URL, AUTH_PORT } = process.env;
-const AuthApi = new Auth({ baseUrl: `${AUTH_URL}:${AUTH_PORT}` });
 
 router.get("/:id", async (req, res) => {
   try {
@@ -31,7 +27,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const book = await Book.create(req.body);
     return res.json({
@@ -44,11 +40,11 @@ router.post("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
   }
 });
 
-router.put("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
+router.put("/", async (req, res) => {
   try {
     const { _id, ...valuesToUpdate } = req.body;
     const updatedBook = await Book.findByIdAndUpdate(
-      ObjectId(_id),
+      ObjectId(req.body._id),
       {
         $set: valuesToUpdate
       },
@@ -61,7 +57,7 @@ router.put("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
   }
 });
 
-router.delete("/:id", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     await Book.findByIdAndDelete(ObjectId(req.params.id));
     return res.send({ err: false, removed: true });
