@@ -17,16 +17,41 @@ class TokenService {
     this.asyncHSET = promisify(this.tokenDb.HSET).bind(this.tokenDb);
   }
 
+  getKeysByToken(token) {
+    return this.asyncKEYS(`*:${token}:*`);
+  }
+
+  getKeysByRefreshToken(refreshToken) {
+    return this.asyncKEYS(`*:${refreshToken}`);
+  }
+
+  getSessionData(key) {
+    return this.asyncHGETALL(key);
+  }
+
+  setSessionData(key, hashKey, value) {
+    return this.asyncHSET(key, hashKey, value);
+  }
+
+  saveTokenData(userId, token, refreshToken) {
+    const now = moment().format();
+    const data = ["createdAt", now, "lastUsed", now, "valid", true];
+
+    return this.asyncHMSET(`${userId}:${token}:${refreshToken}`, data);
+  }
+
   async generateToken(userId) {
     try {
       const token = jwt.sign({ data: { userId } }, this.secret, {
-        expiresIn: "10000ms"
+        expiresIn: this.expiresIn
       });
+
       const refreshToken = crypto.randomBytes(16).toString("hex");
-      const now = moment().format();
-      const data = ["createdAt", now, "lastUsed", now, "valid", true];
-      const res = await this.asyncHMSET(`${userId}:${token}:${refreshToken}`, data);
+
+      const res = await this.saveTokenData(userId, token, refreshToken);
+
       if (res !== "OK") throw new Error(res);
+
       return { token, refreshToken };
     } catch (error) {
       console.log({ error });
@@ -40,17 +65,17 @@ class TokenService {
 
       if (!data) return false;
 
-      const results = await this.asyncKEYS(`*:${token}:*`);
+      const results = await this.getKeysByToken(token);
 
       if (!results) return false;
 
       const [key] = results;
 
-      const tokenData = await this.asyncHGETALL(key);
+      const tokenData = await this.getSessionData(key);
 
       if (tokenData.valid === "false") throw new Error("token was was terminated");
 
-      this.asyncHSET(key, "lastUsed", moment().format());
+      this.setSessionData(key, "lastUsed", moment().format());
 
       return {
         userId: data.userId,
@@ -64,17 +89,13 @@ class TokenService {
 
   async refreshToken(refreshToken) {
     try {
-      console.log({ refreshToken });
-
-      const results = await this.asyncKEYS(`*:${refreshToken}`);
+      const results = await this.getKeysByRefreshToken(refreshToken);
       if (!results) return false;
       const [key] = results;
-      const tokenData = await this.asyncHGETALL(key);
-
-      console.log({ tokenData });
+      const tokenData = await this.getSessionData(key);
 
       if (tokenData.valid === "false") return false;
-      await this.asyncHSET(key, "valid", false);
+      await this.setSessionData(key, "valid", false);
 
       const userId = key.split(":")[0];
 
@@ -87,17 +108,17 @@ class TokenService {
 
   async terminateToken(token) {
     try {
-      const results = await this.asyncKEYS(`*:${token}:*`);
+      const results = await this.getKeysByToken(token);
 
       if (!results) return false;
 
       const [key] = results;
 
-      const tokenData = await this.asyncHGETALL(key);
+      const tokenData = await this.getSessionData(key);
 
       if (tokenData.valid === "false") return "Token is already terminated";
 
-      await this.asyncHSET(key, "valid", false);
+      await this.setSessionData(key, "valid", false);
 
       return true;
     } catch (error) {

@@ -14,7 +14,7 @@ router.post("/sign-up", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: true, error: error.message });
+    res.status(400).json({ error: true, error: error.message });
   }
 });
 
@@ -70,6 +70,40 @@ router.get("/:id", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: false, error: error.message });
+  }
+});
+
+router.get("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
+  try {
+    return res.send({
+      err: false,
+      data: await UsersService.getUsers()
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: false, error: error.message });
+  }
+});
+
+router.put("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
+  try {
+    return res.send({
+      err: false,
+      data: await UsersService.updateUser(req.body)
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: true, error: error.message });
+  }
+});
+
+router.delete("/:id", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
+  try {
+    await UsersService.deleteUser(req.params.id);
+    return res.send({ err: false, removed: true });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: true, error: error.message });
   }
 });
 

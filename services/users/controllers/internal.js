@@ -10,7 +10,7 @@ router.get("/:id", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: false, error: error.message });
+    res.status(400).json({ error: false, error: error.message });
   }
 });
 
@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: false, error: error.message });
+    res.status(400).json({ error: false, error: error.message });
   }
 });
 
@@ -34,7 +34,7 @@ router.put("/", async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: true, error: error.message });
+    res.status(400).json({ error: true, error: error.message });
   }
 });
 
@@ -44,7 +44,7 @@ router.delete("/:id", async (req, res) => {
     return res.send({ err: false, removed: true });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: true, error: error.message });
+    res.status(400).json({ error: true, error: error.message });
   }
 });
 
