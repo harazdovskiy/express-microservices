@@ -84,9 +84,7 @@ describe("insert", () => {
     const storedBook = await Book.findById(editedBook._id).lean();
 
     // expect to receive updated book
-    expect(JSON.stringify(response.body.data)).toEqual(
-      JSON.stringify(storedBook)
-    );
+    expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(storedBook));
   });
 
   it("should delete book on DELETE request", async () => {
