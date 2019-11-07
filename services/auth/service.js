@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const moment = require("moment");
 const { promisify } = require("util");
 const crypto = require("crypto");
+const { logger } = require("../common");
 
 class TokenService {
   constructor({ port, host, secret, expiresIn }) {
@@ -54,7 +55,7 @@ class TokenService {
 
       return { token, refreshToken };
     } catch (error) {
-      console.log({ error });
+      logger.error("Token generation failed", error);
       throw new Error(`Token generation failed: ${error.message}`);
     }
   }
@@ -82,7 +83,7 @@ class TokenService {
         tokenData
       };
     } catch (error) {
-      console.log({ error });
+      logger.error("Token validation failed: ", error);
       throw new Error(`Token validation failed: ${error.message}`);
     }
   }
@@ -101,7 +102,7 @@ class TokenService {
 
       return this.generateToken(userId);
     } catch (error) {
-      console.log({ error });
+      logger.error("Token refreshing failed: ", error);
       throw new Error(`Token refreshing failed: ${error.message}`);
     }
   }
@@ -122,7 +123,7 @@ class TokenService {
 
       return true;
     } catch (error) {
-      console.log({ error });
+      logger.error("Token terminating failed: ", error);
       throw new Error(`Token terminating failed: ${error.message}`);
     }
   }
