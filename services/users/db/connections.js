@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Promise = require("bluebird");
+const { logger } = require("../../common");
 
 mongoose.Promise = Promise;
 
@@ -25,19 +26,19 @@ if (process.env.ENV !== "test" && process.env.USERS_MONGODB_URI) {
   dbURI = process.env.USERS_MONGODB_URI.trim();
   connections.dbConnection.openUri(dbURI, dbOptions);
 } else {
-  console.warn("Connection string is not provided");
+  logger.warn("Connection string is not provided");
 }
 
 connections.dbConnection
   .once("open", () => {
-    console.info(`Mongo DB connected successfully to: ${dbURI}`);
+    logger.info(`Mongo DB connected successfully to: ${dbURI}`);
   })
   .on("error", err => {
-    console.error(err);
+    logger.error(err);
     process.exit(1);
   })
   .on("close", () => {
-    console.info("Mongo DB closed connection");
+    logger.info("Mongo DB closed connection");
   });
 
 process.on("SIGINT", () => {

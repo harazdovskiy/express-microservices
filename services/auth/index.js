@@ -1,5 +1,6 @@
 const Hapi = require("@hapi/hapi");
 const routes = require("./routes");
+const { logger } = require("../common");
 
 const server = Hapi.server({
   port: process.env.AUTH_PORT,
@@ -19,7 +20,7 @@ server.route([
 
 const init = async () => {
   await server.start();
-  console.log("Server running on %s", server.info.uri);
+  logger.info(`AUTH is running on ${server.info.uri}`);
 };
 
 init();

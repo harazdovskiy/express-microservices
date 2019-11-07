@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const UsersService = require("../services/users");
 
+const { logger } = require("../../common");
+
 router.get("/:id", async (req, res) => {
   try {
     return res.send({
@@ -9,7 +11,7 @@ router.get("/:id", async (req, res) => {
       data: await UsersService.getUser(req.params.id)
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: false, error: error.message });
   }
 });
@@ -21,7 +23,7 @@ router.get("/", async (req, res) => {
       data: await UsersService.getUsers()
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: false, error: error.message });
   }
 });
@@ -33,7 +35,7 @@ router.put("/", async (req, res) => {
       data: await UsersService.updateUser(req.body)
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -43,7 +45,7 @@ router.delete("/:id", async (req, res) => {
     await UsersService.deleteUser(req.params.id);
     return res.send({ err: false, removed: true });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });

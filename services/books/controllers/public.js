@@ -4,6 +4,8 @@ const Book = require("../db/book");
 const { ObjectId } = require("mongoose").Types;
 const { Auth } = require("../../common");
 
+const { logger } = require("../../common");
+
 const { AUTH_URL, AUTH_PORT } = process.env;
 const AuthApi = new Auth({ baseUrl: `${AUTH_URL}:${AUTH_PORT}` });
 
@@ -14,7 +16,7 @@ router.get("/:id", async (req, res) => {
       data: await Book.findById(req.params.id)
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: false, error: error.message });
   }
 });
@@ -26,7 +28,7 @@ router.get("/", async (req, res) => {
       data: await Book.find({})
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: false, error: error.message });
   }
 });
@@ -39,7 +41,7 @@ router.post("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
       data: book
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -56,7 +58,7 @@ router.put("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
     );
     return res.send({ err: false, data: updatedBook });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -66,7 +68,7 @@ router.delete("/:id", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
     await Book.findByIdAndDelete(ObjectId(req.params.id));
     return res.send({ err: false, removed: true });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });

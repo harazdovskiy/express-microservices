@@ -3,6 +3,7 @@ const router = express.Router();
 const UsersService = require("../services/users");
 const { Auth } = require("../../common");
 
+const { logger } = require("../../common");
 const { AUTH_URL, AUTH_PORT } = process.env;
 const AuthApi = new Auth({ baseUrl: `${AUTH_URL}:${AUTH_PORT}` });
 
@@ -13,7 +14,7 @@ router.post("/sign-up", async (req, res) => {
       data: await UsersService.createUser(req.body)
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -28,7 +29,7 @@ router.post("/sign-in", async (req, res) => {
       data: { user, ...data }
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -42,7 +43,7 @@ router.post("/sign-out", async (req, res) => {
       data
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -56,7 +57,7 @@ router.post("/refresh-token", async (req, res) => {
       data: data
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -68,7 +69,7 @@ router.get("/:id", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
       data: await UsersService.getUser(req.params.id)
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: false, error: error.message });
   }
 });
@@ -80,7 +81,7 @@ router.get("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
       data: await UsersService.getUsers()
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: false, error: error.message });
   }
 });
@@ -92,7 +93,7 @@ router.put("/", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
       data: await UsersService.updateUser(req.body)
     });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
@@ -102,7 +103,7 @@ router.delete("/:id", AuthApi.isAuthorized.bind(AuthApi), async (req, res) => {
     await UsersService.deleteUser(req.params.id);
     return res.send({ err: false, removed: true });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(400).json({ error: true, error: error.message });
   }
 });
