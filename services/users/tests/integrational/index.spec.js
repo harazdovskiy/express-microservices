@@ -23,6 +23,7 @@ describe("user api tests", () => {
       firstName: "Dmytro",
       lastName: "Harazdovskiy",
       email: "tets@email.com",
+      password: "password",
       city: "Lviv",
       address: "My street",
       title: "Artist",
@@ -30,8 +31,7 @@ describe("user api tests", () => {
       state_province: "Best privince"
     };
 
-    const res = await app.post("/public").send(user);
-
+    const res = await app.post("/internal").send(user);
     expect(res.status).to.be.equal(200);
 
     expect(res.body.err).to.be.false;
@@ -40,8 +40,9 @@ describe("user api tests", () => {
 
     delete createdUser._id;
     delete createdUser.__v;
+    delete user.password;
 
-    expect(res.body.data).to.be.deep.equal(user);
+    expect(createdUser).to.be.deep.equal(user);
   });
 
   it("should get user, response with 200 and user object", async () => {
@@ -49,6 +50,7 @@ describe("user api tests", () => {
       firstName: "Dmytro",
       lastName: "Harazdovskiy",
       email: "tets@email.com",
+      password: "password",
       city: "Lviv",
       address: "My street",
       title: "Artist",
@@ -56,8 +58,9 @@ describe("user api tests", () => {
       state_province: "Best privince"
     }).then(data => JSON.parse(JSON.stringify(data)));
 
-    const res = await app.get(`public/${user._id}`);
+    const res = await app.get(`/internal/${user._id}`);
 
+    delete user.password;
     expect(res.status).to.be.equal(200);
 
     expect(res.body).to.be.deep.equal({
@@ -71,6 +74,7 @@ describe("user api tests", () => {
       firstName: "Dmytro",
       lastName: "Harazdovskiy",
       email: "tets@email.com",
+      password: "password",
       city: "Lviv",
       address: "My street",
       title: "Artist",
@@ -78,7 +82,7 @@ describe("user api tests", () => {
       state_province: "Best privince"
     }).then(data => JSON.parse(JSON.stringify(data)));
 
-    const res = await app.delete(`public/${user._id}`);
+    const res = await app.delete(`/internal/${user._id}`);
 
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.deep.equal({
@@ -96,6 +100,7 @@ describe("user api tests", () => {
       address: "My street",
       title: "Artist",
       country: "Ukraine",
+      password: "password",
       state_province: "Best privince"
     }).then(data => JSON.parse(JSON.stringify(data)));
 
@@ -111,7 +116,8 @@ describe("user api tests", () => {
       state_province: "Oklahoma"
     };
 
-    const res = await app.put("/public").send(editedUser);
+    delete user.password;
+    const res = await app.put("/internal").send(editedUser);
 
     expect(res.status).to.be.equal(200);
     expect(res.body).to.be.deep.equal({

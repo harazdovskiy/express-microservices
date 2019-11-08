@@ -4,6 +4,20 @@ const UsersService = require("../services/users");
 
 const { logger } = require("../../common");
 
+router.post("/", async (req, res) => {
+  try {
+    const user = await UsersService.createUser(req.body);
+
+    return res.json({
+      err: false,
+      data: user
+    });
+  } catch (error) {
+    logger.error(error);
+    res.status(400).json({ error: true, error: error.message });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     return res.send({

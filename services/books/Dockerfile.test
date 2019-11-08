@@ -2,9 +2,14 @@ FROM node:11
 
 WORKDIR /app
 
-COPY ./ /app
+COPY ./services/books ./services/books
 
+COPY ./services/common ./services/common
+
+WORKDIR /app/services/common
+RUN npm install
+
+WORKDIR /app/services/books
 RUN npm install
 
 CMD npm run test
-

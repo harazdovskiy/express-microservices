@@ -1,2 +1,6 @@
 ./services/users-db/db
 ./services/books-db/db
+
+./services/users/node_modules
+./services/books/node_modules
+./services/common/node_modules

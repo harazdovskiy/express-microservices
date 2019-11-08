@@ -27,7 +27,7 @@ describe("insert", () => {
       author: "Shkaf",
       ratings: 4
     });
-    const response = await supertest(app).get(`/public/${book._id}`);
+    const response = await supertest(app).get(`/internal/${book._id}`);
     expect(response.statusCode).toEqual(200);
     expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(book));
   });
@@ -43,7 +43,7 @@ describe("insert", () => {
     };
 
     const response = await supertest(app)
-      .post(`/public`)
+      .post(`/internal`)
       .send(bookToCreate);
     expect(response.statusCode).toEqual(200);
 
@@ -76,7 +76,7 @@ describe("insert", () => {
     };
 
     const response = await supertest(app)
-      .put(`/public`)
+      .put(`/internal`)
       .send(editedBook);
 
     expect(response.statusCode).toEqual(200);
@@ -98,7 +98,7 @@ describe("insert", () => {
     };
     await Book.create(dbBook);
 
-    const response = await supertest(app).delete(`/public/${dbBook._id}`);
+    const response = await supertest(app).delete(`/internal/${dbBook._id}`);
 
     expect(response.statusCode).toEqual(200);
 

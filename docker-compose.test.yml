@@ -5,11 +5,11 @@ services:
   books:
     env_file: .env
     build:
-      context: ./services/books
-      dockerfile: Dockerfile.test
+      context: .
+      dockerfile: ./services/books/Dockerfile.test
 
   users:
     env_file: .env
     build:
-      context: ./services/users
-      dockerfile: Dockerfile.test
+      context: .
+      dockerfile: ./services/users/Dockerfile.test

@@ -13,10 +13,13 @@ class UserService {
 
   async createUser(user) {
     const { password, ...data } = user;
-    return User.create({
+    const createdUserDoc = await User.create({
       password: UserService.genPasswordHash(password),
       ...data
     });
+    const createdUser = createdUserDoc.toJSON();
+    delete createdUser.password;
+    return createdUser;
   }
   async getUser(id) {
     return User.findById(id);

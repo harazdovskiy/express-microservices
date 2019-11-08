@@ -7,7 +7,11 @@ const myFormat = printf(({ level, message, timestamp, stack }) => {
 
 const logger = createLogger({
   format: combine(colorize(), timestamp(), myFormat),
-  transports: [new transports.Console()]
+  transports: [
+    new transports.Console({
+      silent: process.env.ENV === "test"
+    })
+  ]
 });
 
 const formatMessage = text => {
