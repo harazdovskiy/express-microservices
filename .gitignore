@@ -4,3 +4,4 @@ services/**/data
 services/**/coverage
 services/books-db/db
 services/users-db/db
+remote.bash
