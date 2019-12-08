@@ -1,0 +1,7 @@
+language: node_js
+
+services:
+    - docker
+
+script:
+    - echo 'hello dima'
