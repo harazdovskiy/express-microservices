@@ -11,6 +11,7 @@ script:
   # - docker-compose -f docker-compose.test.yml up --build books users
   #   - ${SSH_KEY} >> ./key.pub
   #   - chmod 400 ./key.pub
+  - eval `ssh-agent -s`
   - ssh-add - <<< "${SSH_PRIVATE_KEY}"
   - ls ~/.ssh
   - ssh -i ./id_rsa ${MACHINE_URL}
