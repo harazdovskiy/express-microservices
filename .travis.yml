@@ -4,7 +4,7 @@ services:
   - docker
 
 addons:
-  ssh_known_hosts: ${MACHINE_URL}
+  ssh_known_hosts: 35.184.79.30
 
 script:
   - echo 'Tests'
