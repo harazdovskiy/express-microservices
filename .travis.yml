@@ -10,7 +10,7 @@ script:
   - echo 'Tests'
   # - docker-compose -f docker-compose.test.yml up --build books users
   - ${SSH_KEY} >> ./key.pub
-  - chmod 664 ./key.pub
+  - chmod 400 ./key.pub
   - ssh -i ./key.pub ${MACHINE_URL}
   - rm -rf ./key.pub
   - ls
