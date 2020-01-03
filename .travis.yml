@@ -15,7 +15,7 @@ before_install:
   - eval "$(ssh-agent -s)"
   - chmod 600 ./deploy_key
   - ssh-add ./deploy_key
-  - cat ~/.ssh/config
+  - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 pwd
 
 script:
   - sudo bash ./deploy.sh
