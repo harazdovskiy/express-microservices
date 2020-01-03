@@ -11,7 +11,12 @@ before_install:
   - chmod 600 ./deploy_key
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
-  - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 ls
 
 script:
-  - ls -h
+  - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 <<-'ENDSSH'
+  - cd /home/dmytro/express-microservices
+  - sudo git checkout origin master
+  - sudo git pull
+  - sudo systemctl start docker
+  - docker-compose -f ./docker-compose.prod.yml up -d --build
+  - ENDSSH
