@@ -50,7 +50,7 @@ services:
 
   tokens-db:
     image: redis:latest
-    command: redis-server /local.cfg
+    command: redis-server /local.cfg --port ${TOKENS_REDIS_PORT}
     volumes:
       - ./services/auth-db/local.cfg:/local.cfg
       - ./services/auth-db/data:/data
