@@ -13,4 +13,4 @@ before_install:
   - ssh-add ./deploy_key
 
 script:
-  - './deploy.bash'
+  - './deploy.sh'
