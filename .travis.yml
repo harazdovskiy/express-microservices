@@ -11,7 +11,7 @@ before_install:
     -in deploy_key.enc -out ./deploy_key -d
   - eval "$(ssh-agent -s)"
   - chmod 600 ./deploy_key
-  - sudo echo -e "Host 35.184.79.30\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - sudo echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
   - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 pwd
 
