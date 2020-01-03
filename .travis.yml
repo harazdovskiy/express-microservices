@@ -1,8 +1,10 @@
 language: bash
 services:
   - docker
+
 addons:
-  ssh_known_hosts: 35.184.79.30
+  ssh_known_hosts:
+    - 35.184.79.30
 
 before_script:
   - sudo echo -e "Host 35.184.79.30\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
