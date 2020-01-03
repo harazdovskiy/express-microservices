@@ -5,3 +5,5 @@ services/**/coverage
 services/books-db/db
 services/users-db/db
 remote.bash
+deploy_key
+deploy_key.pub
