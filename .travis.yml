@@ -11,7 +11,7 @@ before_install:
   - chmod 600 ./deploy_key
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
-  - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 pwd
+  - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 ls
 
-after_success:
-  - ls
+script:
+  - ls -h
