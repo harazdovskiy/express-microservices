@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
 
     return res.json({
       err: false,
-      data: user
+      data: null
     });
   } catch (error) {
     logger.error(error);
