@@ -6,10 +6,10 @@ env:
   - SERVER_IP_ADDRESS=35.184.79.30
 
 before_install:
-  - echo "Running tests"
   - docker-compose -f docker-compose.test.yml up --build books
   - docker-compose -f docker-compose.test.yml up --build users
-  - echo "Setuping ssh-keys for remote deploy"
+
+install:
   - openssl aes-256-cbc -K $encrypted_cd2c10753403_key -iv $encrypted_cd2c10753403_iv
     -in deploy_key.enc -out ./deploy_key -d
   - eval "$(ssh-agent -s)"
