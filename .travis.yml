@@ -5,12 +5,11 @@ services:
 env:
   - SERVER_IP_ADDRESS=35.184.79.30
 
-before_install:
+install:
+  - ls
   - cd /Dmytro005/express-microservices
   - cd ./services/common && npm install && cd ../users && npm install && npm run test
-
-install:
-  - docker-compose -f docker-compose.test.yml up --build users
+  # - docker-compose -f docker-compose.test.yml up --build users
   - openssl aes-256-cbc -K $encrypted_cd2c10753403_key -iv $encrypted_cd2c10753403_iv
     -in deploy_key.enc -out ./deploy_key -d
   - eval "$(ssh-agent -s)"
