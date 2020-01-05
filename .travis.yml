@@ -28,3 +28,6 @@ install:
 
 script:
   - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 < ./deploy.sh
+
+notifications:
+  email: false
