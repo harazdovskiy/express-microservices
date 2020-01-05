@@ -47,12 +47,18 @@ describe("insert", () => {
       .send(bookToCreate);
     expect(response.statusCode).toEqual(200);
 
-    const storedBook = await Book.findById(bookToCreate._id).lean();
+    const storedBook = await Book.findById(response.body.data._id).lean();
     delete storedBook.__v;
     delete storedBook.createdAt;
     delete storedBook.updatedAt;
 
+    const { __v, createdAt, updatedAt, ...returnedBook } = response.body.data;
+
     expect(storedBook).toEqual(bookToCreate);
+    expect(storedBook).toEqual({
+      ...returnedBook,
+      _id: new ObjectId(returnedBook._id)
+    });
   });
 
   it("should update book on PUT request", async () => {
@@ -84,7 +90,9 @@ describe("insert", () => {
     const storedBook = await Book.findById(editedBook._id).lean();
 
     // expect to receive updated book
-    expect(JSON.stringify(response.body.data)).toEqual(JSON.stringify(storedBook));
+    expect(JSON.stringify(response.body.data)).toEqual(
+      JSON.stringify(storedBook)
+    );
   });
 
   it("should delete book on DELETE request", async () => {
