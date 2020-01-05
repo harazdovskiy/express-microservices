@@ -22,6 +22,7 @@ router.get("/:id", async (req, res) => {
   try {
     return res.send({
       err: false,
+      some: "shit",
       data: await UsersService.getUser(req.params.id)
     });
   } catch (error) {
