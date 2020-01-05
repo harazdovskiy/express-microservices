@@ -16,5 +16,7 @@ install:
 
 script:
   - ls
-  - cd ./services/common && npm install && cd ../users && npm install && npm run test
+  - cd ./services/common && npm install
+  - cd ../users && npm install
+  - npm run test
   # - ssh -i ./deploy_key TravisCIDeployKey@35.184.79.30 < ./deploy.sh
