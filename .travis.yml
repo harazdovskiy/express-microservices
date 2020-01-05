@@ -6,7 +6,7 @@ env:
   - SERVER_IP_ADDRESS=35.184.79.30
 
 before_install:
-  - cd /services/common && npm install && cd ../users && npm install && npm run test
+  - cd ./services/common && npm install && cd ../users && npm install && npm run test
 
 install:
   - docker-compose -f docker-compose.test.yml up --build users
