@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
     const book = await Book.create(req.body);
     return res.json({
       err: false,
-      data: book
+      // data: book
     });
   } catch (error) {
     logger.error(error);
