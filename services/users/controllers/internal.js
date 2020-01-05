@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
 
     return res.json({
       err: false,
-      data: "user"
+      // data: user
     });
   } catch (error) {
     logger.error(error);
@@ -22,7 +22,6 @@ router.get("/:id", async (req, res) => {
   try {
     return res.send({
       err: false,
-      some: "shit",
       data: await UsersService.getUser(req.params.id)
     });
   } catch (error) {
