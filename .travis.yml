@@ -5,11 +5,11 @@ services:
 env:
   - SERVER_IP_ADDRESS=35.184.79.30
 
-- stages:
+stages:
   - "Tests"
   - "Deploy"
 
-- jobs:
+jobs:
     include:
       - stage: "Tests"
         script:
