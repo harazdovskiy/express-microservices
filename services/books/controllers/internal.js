@@ -8,7 +8,7 @@ router.get("/:id", async (req, res) => {
   try {
     return res.send({
       err: false,
-      data: await Book.findById(req.params.id)
+      // data: await Book.findById(req.params.id)
     });
   } catch (error) {
     logger.error(error);
