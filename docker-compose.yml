@@ -75,3 +75,12 @@ services:
       - ./services/users-db/config.cfg:/config.cfg
     ports:
       - ${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}
+
+  message-broker:
+    image: redis:latest
+    command: redis-server /local.cfg --port 6667
+    volumes:
+      - ./services/message-broker/local.cfg:/local.cfg
+      - ./services/message-broker/data:/data
+    ports:
+      - 6667:6667

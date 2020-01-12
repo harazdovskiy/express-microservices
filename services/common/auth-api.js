@@ -1,24 +1,24 @@
-const requestPromise = require("request-promise");
+const Client = require("./seneca/client");
 
 class Auth {
-  constructor({ baseUrl }) {
-    this.baseUrl = `${baseUrl}/internal`;
+  constructor() {
+    this.AuthService = new Client("auth");
   }
 
   generateToken(userId) {
-    return requestPromise(`${this.baseUrl}/generate`, { method: "POST", json: true, body: { userId } });
+    return this.AuthService.act("token:generate", { userId });
   }
 
   terminateToken(token) {
-    return requestPromise(`${this.baseUrl}/terminate`, { method: "POST", json: true, body: { token } });
+    return this.AuthService.act("token:terminate", { token });
   }
 
   validateToken(token) {
-    return requestPromise(`${this.baseUrl}/validate`, { method: "POST", json: true, body: { token } });
+    return this.AuthService.act("token:validate", { token });
   }
 
   refreshToken(refreshToken) {
-    return requestPromise(`${this.baseUrl}/refresh`, { method: "POST", json: true, body: { refreshToken } });
+    return this.AuthService.act("token:refresh", { refreshToken });
   }
 
   // expres-middleware
@@ -26,7 +26,9 @@ class Auth {
     try {
       const { authorization } = req.headers;
       if (!authorization) {
-        return res.status(401).json({ err: true, message: "Provide authorization token" });
+        return res
+          .status(401)
+          .json({ err: true, message: "Provide authorization token" });
       }
       const token = authorization.split(" ")[1];
       const res = await this.validateToken(token);

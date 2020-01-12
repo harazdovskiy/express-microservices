@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
 const { logger } = require("../common");
-app.use(bodyParser.urlencoded({ aextended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(morgan("tiny", { stream: logger.winstonStream }));
 

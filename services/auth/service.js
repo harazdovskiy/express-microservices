@@ -1,3 +1,4 @@
+require("dotenv").config();
 const redis = require("redis");
 const { TOKENS_REDIS_URI, TOKENS_REDIS_PORT, SECRET, INVITE_EXPIRES_IN } = process.env;
 const jwt = require("jsonwebtoken");

@@ -4,8 +4,7 @@ const UsersService = require("../services/users");
 const { Auth } = require("../../common");
 
 const { logger } = require("../../common");
-const { AUTH_URL, AUTH_PORT } = process.env;
-const AuthApi = new Auth({ baseUrl: `${AUTH_URL}:${AUTH_PORT}` });
+const AuthApi = new Auth();
 
 router.post("/sign-up", async (req, res) => {
   try {
@@ -23,7 +22,9 @@ router.post("/sign-in", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await UsersService.authenticateUser({ email, password });
-    const { data } = await AuthApi.generateToken(user._id);
+    const data = await AuthApi.generateToken(user._id);
+    console.log({ data });
+    // "mongodb-memory-server": "^5.2.0"
     return res.json({
       err: false,
       data: { user, ...data }
@@ -37,7 +38,7 @@ router.post("/sign-in", async (req, res) => {
 router.post("/sign-out", async (req, res) => {
   try {
     const { token } = req.body;
-    const { data } = await AuthApi.terminateToken(token);
+    const data = await AuthApi.terminateToken(token);
     return res.json({
       err: false,
       data
@@ -51,7 +52,7 @@ router.post("/sign-out", async (req, res) => {
 router.post("/refresh-token", async (req, res) => {
   try {
     const { refreshToken } = req.body;
-    const { data } = await AuthApi.refreshToken(refreshToken);
+    const data = await AuthApi.refreshToken(refreshToken);
     return res.json({
       err: false,
       data: data

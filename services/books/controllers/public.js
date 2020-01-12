@@ -5,9 +5,7 @@ const { ObjectId } = require("mongoose").Types;
 const { Auth } = require("../../common");
 
 const { logger } = require("../../common");
-
-const { AUTH_URL, AUTH_PORT } = process.env;
-const AuthApi = new Auth({ baseUrl: `${AUTH_URL}:${AUTH_PORT}` });
+const AuthApi = new Auth();
 
 router.get("/:id", async (req, res) => {
   try {
