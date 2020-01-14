@@ -23,8 +23,6 @@ router.post("/sign-in", async (req, res) => {
     const { email, password } = req.body;
     const user = await UsersService.authenticateUser({ email, password });
     const data = await AuthApi.generateToken(user._id);
-    console.log({ data });
-    // "mongodb-memory-server": "^5.2.0"
     return res.json({
       err: false,
       data: { user, ...data }
