@@ -46,7 +46,7 @@ services:
     depends_on:
       - users-db
     environment:
-      WAIT_HOSTS: users-db:${USERS_MONGODB_PORT}
+      WAIT_HOSTS: users-db:${USERS_DB_PORT}
 
   tokens-db:
     image: redis:latest
@@ -68,10 +68,10 @@ services:
       - ${BOOKS_MONGODB_PORT}:${BOOKS_MONGODB_PORT}
 
   users-db:
-    image: mongo:latest
-    command: mongod -f ./config.cfg --port ${USERS_MONGODB_PORT}
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: users
     volumes:
-      - ./services/users-db/db:/data/db
-      - ./services/users-db/config.cfg:/config.cfg
+      - ./services/users-db/db:/var/lib/postgresql/data
     ports:
-      - ${USERS_MONGODB_PORT}:${USERS_MONGODB_PORT}
+      - ${USERS_DB_PORT}:5432

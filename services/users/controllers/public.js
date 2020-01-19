@@ -23,7 +23,7 @@ router.post("/sign-in", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await UsersService.authenticateUser({ email, password });
-    const { data } = await AuthApi.generateToken(user._id);
+    const { data } = await AuthApi.generateToken(user.id);
     return res.json({
       err: false,
       data: { user, ...data }

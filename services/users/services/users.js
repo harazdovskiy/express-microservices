@@ -1,6 +1,5 @@
-const User = require("../db/user");
-const { ObjectId } = require("mongoose").Types;
 const bcrypt = require("bcrypt");
+const User = require("../db/user");
 
 class UserService {
   static genPasswordHash(password) {
@@ -22,36 +21,51 @@ class UserService {
     return createdUser;
   }
   async getUser(id) {
-    return User.findById(id);
+    const user = await User.findOne({
+      where: { id },
+      attributes: {
+        exclude: ["password"]
+      }
+    });
+    return user;
   }
 
   async getUsers() {
-    return User.find();
+    return User.findAll({
+      attributes: {
+        exclude: ["password"]
+      }
+    });
   }
 
   async authenticateUser({ email, password }) {
-    const user = await User.findOne({ email })
-      .select("+password")
-      .lean();
-    const authed = UserService.comparePasswords(password, user.password);
+    const user = await User.findOne({ where: { email } });
+    const authed = UserService.comparePasswords(
+      password,
+      user.toJSON().password
+    );
     if (!authed) throw Error("Unauthorized");
     delete user.password;
     return user;
   }
 
   async updateUser(user) {
-    const { _id, ...valuesToUpdate } = user;
-    return User.findByIdAndUpdate(
-      ObjectId(_id),
+    const { id, ...valuesToUpdate } = user;
+    const updatedUser = User.update(
       {
-        $set: valuesToUpdate
+        ...valuesToUpdate
       },
-      { new: true }
+      {
+        where: {
+          id
+        }
+      }
     );
+    return this.getUser(id);
   }
 
   async deleteUser(id) {
-    return User.findByIdAndDelete(ObjectId(id));
+    return User.destroy({ where: { id } });
   }
 }
 

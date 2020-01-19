@@ -4,9 +4,12 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
 const { logger } = require("../common");
+const sequelize = require("./db/connections");
 app.use(bodyParser.urlencoded({ aextended: true }));
 app.use(bodyParser.json());
 app.use(morgan("tiny", { stream: logger.winstonStream }));
+
+sequelize.sync();
 
 app.use("/internal", require("./controllers/internal"));
 app.use("/public", require("./controllers/public"));
