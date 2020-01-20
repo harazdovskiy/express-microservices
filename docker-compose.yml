@@ -69,9 +69,10 @@ services:
 
   users-db:
     image: postgres:latest
+    command: postgres -p ${USERS_DB_PORT}
     environment:
       POSTGRES_DB: users
     volumes:
       - ./services/users-db/db:/var/lib/postgresql/data
     ports:
-      - ${USERS_DB_PORT}:5432
+      - ${USERS_DB_PORT}:${USERS_DB_PORT}
