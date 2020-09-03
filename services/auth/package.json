@@ -11,7 +11,7 @@
   "author": "Dmytro Harazdovskiy <harazdovskiy@gmail.com> (https://github.com/Dmytro005)",
   "license": "ISC",
   "dependencies": {
-    "@hapi/hapi": "^18.3.2",
+    "@hapi/hapi": "^19.1.1",
     "redis": "^2.8.0",
     "rebridge": "^2.3.1",
     "jsonwebtoken": "^8.5.1",
